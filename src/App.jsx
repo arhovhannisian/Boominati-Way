@@ -10,9 +10,12 @@ function App() {
                 {
                     token && <Header/>
                 }
-
                 <Pages/>
 
+
+
+
+        
             <Footer />
     </>
 
