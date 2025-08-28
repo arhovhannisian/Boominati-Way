@@ -12,6 +12,8 @@ import PasswordInput from "../Pages/PrivatePages/game.jsx";
 import Product from "../Pages/PrivatePages/product.jsx";
 import AdminPage from "../Pages/AdminPages/adminPage.jsx";
 import UsersControl from "../Pages/AdminPages/usersControl.jsx";
+import EditImage from "../Pages/AdminPages/EditImage.jsx";
+import ImagesControl from "../Pages/AdminPages/ImagesControl.jsx";
 
 export const REGISTER_PAGE = "/register"
 export const LOGIN_PAGE = "/login"
@@ -26,12 +28,16 @@ export const PRODUCT_PAGE = "/product"
 export const PRODUCTS_PAGE = "/products"
 export const ADMIN_PAGE = "/admin"
 export const USERS_CONTROL_PAGE = "/userscontrol"
+export const IMAGES_CONTROL_PAGE = "/imagescontrol"
+export const EDIT_IMAGE_PAGE = "/editimage"
 
 
 export const Admin_Routes=[
     {path:ADMIN_PAGE, element: <AdminPage /> ,name:"Admin"},
     {path:ADDPRODUCT_PAGE, element: <AddProduct />,name:"AddProduct"},
     {path:USERS_CONTROL_PAGE, element: <UsersControl />,name:"Users Control"},
+    {path:IMAGES_CONTROL_PAGE, element: <ImagesControl />,name:"Images Control"},
+    {path:EDIT_IMAGE_PAGE, element: <EditImage />,name:"Edit Image"},
 
     {path:"*", element: <Navigate to={ADMIN_PAGE}/>},
 ]

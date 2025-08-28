@@ -7,7 +7,7 @@ const About = () => {
     const [currentVideo, setCurrentVideo] = useState('drnBMAEA3AM');
     const videos = [
         {
-            
+
             title: 'arrrrrj',
            src: 'WtuEDKXvJho'
         },
