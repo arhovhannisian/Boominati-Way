@@ -11,7 +11,7 @@ const Product = () => {
 
     const fetchproduct = async () => {
         try {
-            const response = await axios.get(`http://localhost:4000/products/${id}`);
+            const response = await axios.get(`https://boominati-way.onrender.com//${id}`);
 
             setProduct(response.data);
 

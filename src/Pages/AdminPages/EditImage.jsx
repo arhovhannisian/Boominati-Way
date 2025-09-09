@@ -15,14 +15,14 @@ const EditImage = () => {
 
     useEffect(() => {
         const fetchImage = async () => {
-            const res = await axios.get(`http://localhost:4000/images/${id}`);
+            const res = await axios.get(`https://boominati-way.onrender.com/${id}`);
             setFormData(res.data);
         };
         fetchImage();
     }, [id]);
 
     const handleSave = async () => {
-        await axios.patch(`http://localhost:4000/images/${id}`, formData);
+        await axios.patch(`https://boominati-way.onrender.com/${id}`, formData);
         navigate("/images"); // հետո redirect է անում обратно images control
     };
 

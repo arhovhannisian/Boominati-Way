@@ -10,7 +10,7 @@ const ImagesControl = () => {
     const fetchImages = async () => {
         dispatch({ type: "FETCH_IMAGES_REQUEST" });
         try {
-            const res = await axios.get("http://localhost:4000/products");
+            const res = await axios.get("https://boominati-way.onrender.com/products");
             dispatch({ type: "FETCH_IMAGES_SUCCESS", payload: res.data });
         } catch (err) {
             dispatch({ type: "FETCH_IMAGES_FAILURE", payload: err.message });
@@ -22,7 +22,7 @@ const ImagesControl = () => {
     }, []);
 
     const handleDelete = async (id) => {
-        await axios.delete(`http://localhost:4000/products/${id}`);
+        await axios.delete(`https://boominati-way.onrender.com/${id}`);
         dispatch({ type: "DELETE_IMAGE", payload: id });
     };
 

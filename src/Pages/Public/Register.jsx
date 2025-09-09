@@ -18,7 +18,7 @@ const Register = () => {
     const fetchUsers = async () => {
         dispatch({ type: 'FETCH_USERS_REQUEST' });
         try {
-            const response = await axios.get("http://localhost:4000/users");
+            const response = await axios.get("https://boominati-way.onrender.com/users");
             dispatch({ type: 'FETCH_USERS_SUCCESS', payload: response.data });
         } catch (err) {
             dispatch({ type: 'FETCH_USERS_FAILURE', payload: err.message });
@@ -34,7 +34,7 @@ const Register = () => {
         if (email && password && username) {
             const newUser = { username, email, password };
             try {
-                const response = await axios.post("http://localhost:4000/users", newUser);
+                const response = await axios.post("https://boominati-way.onrender.com/users", newUser);
                 setRegistered(!registered);
                 notify('Registration success', "green", 3000);
                 navigate(LOGIN_PAGE);

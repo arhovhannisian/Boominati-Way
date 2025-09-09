@@ -39,7 +39,7 @@ const AddProduct = () => {
 
         }
         try{
-            const response = await axios.post("http://localhost:4000/products" , newProduct);
+            const response = await axios.post("https://boominati-way.onrender.com//products" , newProduct);
 
             notify('Product Successfully Added', "green", 5000);
             console.log(response);

@@ -11,7 +11,7 @@ const UsersControl = () => {
     const fetchUsers = async () => {
         dispatch({ type: "FETCH_USERS_REQUEST" });
         try {
-            const res = await axios.get("http://localhost:4000/users");
+            const res = await axios.get("https://boominati-way.onrender.com/users");
             dispatch({ type: "FETCH_USERS_SUCCESS", payload: res.data });
         } catch (err) {
             dispatch({ type: "FETCH_USERS_FAILURE", payload: err.message });
@@ -24,18 +24,18 @@ const UsersControl = () => {
 
     // Delete user
     const handleDelete = async (id) => {
-        await axios.delete(`http://localhost:4000/users/${id}`);
+        await axios.delete(`https://boominati-way.onrender.com/users/${id}`);
         dispatch({ type: "DELETE_USER", payload: id });
     };
 
     // Block user
     const handleBlock = async (id) => {
-        await axios.patch(`http://localhost:4000/users/${id}`, { blocked: true });
+        await axios.patch(`https://boominati-way.onrender.com/${id}`, { blocked: true });
         dispatch({ type: "BLOCK_USER", payload: id });
     };
 
     const handleUnBlock = async (id) => {
-        await axios.patch(`http://localhost:4000/users/${id}`, { blocked: false });
+        await axios.patch(`https://boominati-way.onrender.com/${id}`, { blocked: false });
         dispatch({ type: "UNBLOCK_USER", payload: id });
     };
 
@@ -48,7 +48,7 @@ const UsersControl = () => {
     // Save edit
     const handleSave = async (id) => {
         const updatedUser = { ...editData, id };
-        await axios.patch(`http://localhost:4000/users/${id}`, updatedUser);
+        await axios.patch(`https://boominati-way.onrender.com/${id}`, updatedUser);
         dispatch({ type: "UPDATE_USER", payload: updatedUser });
         setEditUserId(null);
     };
