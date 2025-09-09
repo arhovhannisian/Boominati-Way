@@ -12,7 +12,7 @@ import {notify} from "../../Components/UI/notify.jsx";
 
         const fetchUsers = async () => {
             try {
-                const response = await axios.get('https://boominati-way.onrender.com//users')
+                const response = await axios.get('https://boominati-way.onrender.com/users')
                 const data = await response.data;
                 setUsers(data)
             } catch (err) {
