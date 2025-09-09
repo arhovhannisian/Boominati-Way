@@ -14,7 +14,7 @@ const Products = () => {
     const fetchProducts = async () => {
         dispatch({ type: "FETCH_PRODUCTS_REQUEST" });
         try {
-            const response = await axios.get("http://localhost:4000/products");
+            const response = await axios.get("https://boominati-way.onrender.com/products");
             dispatch({ type: "FETCH_PRODUCTS_SUCCESS", payload: response.data });
         } catch (e) {
             dispatch({ type: "FETCH_PRODUCTS_FAILURE", payload: e.message });

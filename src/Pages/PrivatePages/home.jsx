@@ -9,7 +9,7 @@ const Home = () => {
     async function fetchPosts() {
         dispatch({ type: "FETCH_POSTS_REQUEST" });
         try {
-            const response = await axios.get("http://localhost:4000/posts");
+            const response = await axios.get("https://boominati-way.onrender.com/posts");
             dispatch({ type: "FETCH_POSTS_SUCCESS", payload: response.data });
         } catch (e) {
             dispatch({ type: "FETCH_POSTS_ERROR", payload: e.message });
@@ -23,7 +23,7 @@ const Home = () => {
     async function addPost(e) {
         e.preventDefault();
         try {
-            const response = await axios.post("http://localhost:4000/posts", {
+            const response = await axios.post("https://boominati-way.onrender.com/posts", {
                 title,
             });
             setTitle("");
@@ -35,7 +35,7 @@ const Home = () => {
 
     async function deletePost(id) {
         try {
-            await axios.delete(`http://localhost:4000/posts/${id}`);
+            await axios.delete(`https://boominati-way.onrender.com/posts/${id}`);
             dispatch({ type: "DELETE_POST", payload: id });
         } catch (e) {
             console.log(e.message);

@@ -10,7 +10,7 @@ const Todo = () => {
         if(todo !== ''){
             setTodo ('');
             try{
-                const response = await axios.post("http://localhost:4000/todos", {todo})
+                const response = await axios.post("https://boominati-way.onrender.com/todos", {todo})
                 fetchTodos()
                 return response.data;
             }catch(e){
@@ -20,7 +20,7 @@ const Todo = () => {
     }
     const fetchTodos = async () => {
         try{
-            const response = await axios.get("http://localhost:4000/todos");
+            const response = await axios.get("https://boominati-way.onrender.com/todos");
             const data = await response.data;
             setTodos(data);
             return response.data;

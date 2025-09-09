@@ -10,7 +10,7 @@ const Header = () => {
     const [pass, setPass] = useState('');
     const fetchAdmin = async () => {
         try{
-            const response = await axios.get("http://localhost:4000/users")
+            const response = await axios.get("https://boominati-way.onrender.com/users")
             const data = await response.data;
             const admInfo =  data.find(u => u.username  === token)
             setAdm(admInfo);
