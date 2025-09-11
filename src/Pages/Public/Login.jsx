@@ -1,64 +1,41 @@
-// Login.jsx
-import { useState, useEffect } from "react";
-import { useNavigate, Link } from "react-router-dom";
-import axios from "axios";
-import { notify } from "../../Components/UI/notify.jsx";
+import { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate, Link } from 'react-router-dom';
+import { login, checkToken } from '../../Redux/slices/authSlice.js';
+import { notify } from '../../Components/UI/notify.jsx';
 
 export default function Login() {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [users, setUsers] = useState([]);
-    const [isAdmin, setIsAdmin] = useState(false);
-    const navigate = useNavigate();
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [loading, setLoading] = useState(false);
 
-    const adminEmail = "admin@gmail.com";
-    const adminPassword = "admin";
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const { isAdmin, currentUser, error } = useSelector((state) => state.auth);
 
     useEffect(() => {
-        const fetchUsers = async () => {
-            try {
-                const res = await axios.get("https://boominati-way.onrender.com/users");
-                setUsers(res.data);
-            } catch (err) {
-                console.log(err);
-            }
-        };
-        fetchUsers();
+        dispatch(checkToken());
+    }, [dispatch]);
 
-        // Check token from localStorage
-        const token = localStorage.getItem("token");
-        if (token === adminEmail) setIsAdmin(true);
-    }, []);
+    useEffect(() => {
+        if (currentUser) {
+            notify(isAdmin ? 'Admin login successful!' : 'Login successful!', 'green', 3000);
+            navigate(isAdmin ? '/admin' : '/');
+        }
+        if (error) {
+            notify(error, 'red', 3000);
+        }
+    }, [currentUser, isAdmin, error, navigate]);
 
-    const handleLogin = (e) => {
+    const handleLogin = async (e) => {
         e.preventDefault();
         if (!email || !password) {
-            notify("Fill all fields!", "red", 3000);
+            notify('Fill all fields!', 'red', 3000);
             return;
         }
-
-        // Admin login override
-        if (email === adminEmail && password === adminPassword) {
-            localStorage.setItem("token", adminEmail);
-            setIsAdmin(true);
-            notify("Admin login successful!", "green", 3000);
-            navigate("/admin"); // go to AdminPages
-            return;
-        }
-
-        // Normal user login
-        const user = users.find((u) => u.email === email && u.password === password);
-        if (user) {
-            localStorage.setItem("token", user.email);
-            notify("Login successful!", "green", 3000);
-            navigate("/"); // go to general page
-        } else {
-            notify("Invalid email or password", "red", 3000);
-        }
-    };
-
-    const goToAdmin = () => {
-        navigate("/admin");
+        setLoading(true);
+        await dispatch(login({ email, password }));
+        setLoading(false);
     };
 
     return (
@@ -86,28 +63,19 @@ export default function Login() {
                 />
                 <button
                     type="submit"
-                    className="py-3 bg-purple-600 text-white rounded-xl hover:bg-purple-700 transition"
+                    disabled={loading}
+                    className={`py-3 bg-purple-600 text-white rounded-xl hover:bg-purple-700 transition ${
+                        loading ? 'opacity-50 cursor-not-allowed' : ''
+                    }`}
                 >
-                    Login
+                    {loading ? 'Loading...' : 'Login'}
                 </button>
-
                 <p className="text-center text-gray-600 mt-2">
-                    Don’t have an account?{" "}
+                    Don’t have an account?{' '}
                     <Link to="/register" className="text-purple-600 hover:underline">
                         Sign Up
                     </Link>
                 </p>
-
-
-                {isAdmin && (
-                    <button
-                        type="button"
-                        onClick={goToAdmin}
-                        className="mt-4 w-full py-2 bg-red-600 text-white rounded-xl hover:bg-red-700 transition"
-                    >
-                        Admin Mode
-                    </button>
-                )}
             </form>
         </div>
     );
