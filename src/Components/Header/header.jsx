@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import Nav from './nav.jsx';
@@ -7,15 +7,18 @@ import axios from 'axios';
 
 const Header = () => {
     const navigate = useNavigate();
-    const { isAdmin } = useSelector((state) => state.auth);
+    const { isAdmin, currentUser } = useSelector((state) => state.auth);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [pass, setPass] = useState('');
     const [error, setError] = useState(null);
+
+    console.log('Header state:', { isAdmin, currentUser }); // Debug log
 
     const handleAdminLogin = async (e) => {
         e.preventDefault();
         try {
             const response = await axios.post('https://boominati-way.onrender.com/admin-login', { password: pass });
+            console.log('Admin login response:', response.data); // Debug log
             if (response.data.success) {
                 localStorage.setItem('token', 'adminMode');
                 navigate('/admin');
@@ -29,15 +32,22 @@ const Header = () => {
     };
 
     const handleExitAdmin = () => {
-        localStorage.setItem('token', 'admin');
+        localStorage.setItem('token', currentUser?.email || 'admin');
         navigate('/');
     };
+
+    // Fallback: Ստուգել email-ը կամ token-ը admin-ի համար
+    const isAdminUser = !isAdmin && (
+        currentUser?.role === 'admin' ||
+        localStorage.getItem('token') === 'admin' ||
+        currentUser?.email === 'admin@gmail.com' // Ձեր օգտատիրոջ email-ը
+    );
 
     return (
         <div className="Header">
             <div className="w-[95%] h-[50%] bg-amber-100 flex items-center rounded-2xl">
                 {isAdmin ? <NavAdmin /> : <Nav />}
-                {localStorage.getItem('token') === 'admin' && (
+                {isAdminUser && (
                     <button onClick={() => setIsModalOpen(true)}>Admin mode</button>
                 )}
                 {isAdmin && (
